@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title | default: "My Site" }}</title>
+  <style>
+    :root { --bg: #ffffff; --fg: #1a1a1a; --link: #0066cc; }
+    [data-theme="dark"] { --bg: #1a1a1a; --fg: #e8e8e8; --link: #66aaff; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    a { color: var(--link); }
+    img { max-width: 100%; }
+
+    #theme-toggle {
+      float: right;
+      background: none;
+      border: 1px solid var(--fg);
+      color: var(--fg);
+      border-radius: 4px;
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle">☀ / ☽</button>
+  {{ content }}
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const saved = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', saved);
+
+    toggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+</body>
+</html>
