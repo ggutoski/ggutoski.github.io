@@ -33,6 +33,10 @@
       font-size: 0.85rem;
     }
   </style>
+  {% if page.og_image %}
+  <meta property="og:image" content="{{ page.og_image | absolute_url }}">
+  <meta property="og:image:width" content="1200">
+  {% endif %}
 </head>
 <body>
   <button id="theme-toggle">☀ / ☽</button>
